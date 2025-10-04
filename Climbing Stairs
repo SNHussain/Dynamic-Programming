@@ -1,0 +1,79 @@
+Brute approach:
+class Solution {
+public:
+    int climbStairs(int n) {
+        if(n==0) return 1;
+        if(n==1) return 1;
+        vector<int > dp(n+1, -1);//Initalize
+
+        if(dp[n]!=-1) return dp[n];//return if present
+
+       int left = climbStairs(n-1);
+       int right= climbStairs(n-2);
+
+       return dp[n]=left + right;//store if not present
+
+    }
+};
+
+Memoization(Top Down):
+class Solution {
+public:
+    int climbStairs(int n) {
+        if(n==0) return 1;
+        if(n==1) return 1;
+        vector<int > dp(n+1, -1);//Initalize
+
+        if(dp[n]!=-1) return dp[n];//return if present
+
+       int left = climbStairs(n-1);
+       int right= climbStairs(n-2);
+
+       return dp[n]=left + right;//store if not present
+
+    }
+};
+
+Tabulation(Bottom Up):
+class Solution {
+public:
+    int climbStairs(int n) {
+        if(n==0) return 1;
+        if(n==1) return 1;
+        vector<int > dp(n+1, 0);
+
+       dp[0]=1;
+       dp[1]=1;
+
+        for(int i=2; i<=n; i++){
+            dp[i]= climbStairs(n-1) +  climbStairs(n-2);
+        }
+       
+
+       return dp[n];
+
+    }
+};
+
+Space Optimzed- Tabulation:
+class Solution {
+public:
+    int climbStairs(int n) {
+        if(n==0) return 1;
+        if(n==1) return 1;
+        vector<int > dp(n+1, 0);
+
+        int prev2=1; //dp[0]
+        int prev=1; //dp[1]
+
+        for(int i=2; i<=n; i++){
+            int curr= prev2 + prev; //dp[i]
+            prev2 = prev;
+            prev = curr;
+        }
+       
+
+       return prev;
+
+    }
+};
