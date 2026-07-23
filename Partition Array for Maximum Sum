@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int solve(int ind, vector<int>& arr, int k, vector<int> &dp){
+        int n = arr.size();
+        if(ind == n) return 0;
+
+        if(dp[ind] != -1){
+            return dp[ind];
+        }
+
+        int len = 0;
+        int maxi = -1e9;
+        int maxCost = -1e9;
+
+        for(int j=ind ; j< min(n, ind+k); j++){
+            len++;
+            maxi = max(maxi, arr[j]);
+            int cost = len * maxi + solve(j+1, arr, k, dp);
+            maxCost = max(maxCost, cost);
+        }
+
+        return dp[ind] = maxCost;
+    }
+    int maxSumAfterPartitioning(vector<int>& arr, int k) {
+        
+        int n = arr.size();
+
+        vector<int> dp(n, -1);
+        return solve(0, arr, k, dp);
+    }
+};
